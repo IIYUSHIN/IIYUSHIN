@@ -1,0 +1,102 @@
+name: profile
+
+# Regenerates every card on the profile once a day, on demand, and whenever
+# the config or generator changes.
+on:
+  schedule:
+    - cron: "17 19 * * *" # 00:47 IST daily (GitHub cron is UTC)
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "profile.config.json"
+      - "scripts/**"
+      - ".github/profile-3d.json"
+      - ".github/workflows/profile.yml"
+
+concurrency:
+  group: profile
+  cancel-in-progress: false
+
+# Nothing gets a token unless a job asks for it.
+permissions: {}
+
+jobs:
+  render:
+    # Third-party actions run in this job, which only has a READ-ONLY token.
+    # They can read your public contribution data; they cannot push to the repo.
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Self-test generator
+        run: node --test "scripts/test/*.test.mjs"
+
+      - name: Render pixel cards + live stats
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USER: ${{ github.repository_owner }}
+        run: node scripts/generate.mjs
+
+      - name: 3D contribution city
+        uses: yoshi389111/github-profile-3d-contrib@0.9.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
+          SETTING_JSON: .github/profile-3d.json
+
+      - name: Contribution snake
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            assets/generated/snake-dark.svg?color_snake=#ff2e88&color_dots=#161229,#3b1f6e,#7a2fd0,#19a8c4,#19f7ff
+            assets/generated/snake-light.svg?palette=github-light&color_snake=#ff2e88
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: profile-assets
+          path: |
+            README.md
+            assets/generated/
+            profile-3d-contrib/
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    # Only first-party GitHub actions + git run with write access.
+    needs: render
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: profile-assets
+          path: .
+
+      - name: Commit if anything changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md assets/generated profile-3d-contrib
+          if git diff --staged --quiet; then
+            echo "No visual changes today."
+            exit 0
+          fi
+          git commit -m "chore: regenerate profile cards [skip ci]"
+          git push
