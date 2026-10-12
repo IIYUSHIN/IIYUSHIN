@@ -1,0 +1,56 @@
+{
+  "name": "IIYUSHIN",
+
+  "hero": {
+    "ticker": "AI ◆ BACKEND ◆ FRONTEND ◆ SYSTEMS",
+    "tagline": "I BUILD THINGS THAT SHOULDN'T EXIST YET.",
+    "hud": "STAGE 00 · BOOT"
+  },
+
+  "boot": {
+    "host": "IIYUSHIN@NEXUS:~",
+    "lines": [
+      { "text": "BOOTING IIYUSHIN.EXE", "tag": "OK" },
+      { "text": "LOADING MODULES: AI / BACKEND / FRONTEND", "tag": "OK" },
+      { "text": "LINKING NEURAL INTERFACE", "tag": "OK" },
+      { "text": "LIMITS: NOT FOUND", "tag": "WARN" },
+      { "text": "STATUS: BUILDING SOMETHING INSANE", "tag": null }
+    ]
+  },
+
+  "player": {
+    "class": "SYSTEM BREAKER"
+  },
+
+  "arsenal": [
+    { "category": "AI / ML", "color": "violet", "items": [] },
+    { "category": "BACKEND", "color": "cyan", "items": [] },
+    { "category": "FRONTEND", "color": "pink", "items": [] },
+    { "category": "INFRA & TOOLS", "color": "lime", "items": [] }
+  ],
+
+  "quests": [
+    {
+      "codename": "PROJECT ████",
+      "status": "classified",
+      "teaser": "STEALTH MODE · CLEARANCE OMEGA",
+      "url": null
+    },
+    {
+      "codename": "PROJECT ████",
+      "status": "classified",
+      "teaser": "STEALTH MODE · CLEARANCE OMEGA",
+      "url": null
+    },
+    {
+      "codename": "PROJECT ████",
+      "status": "classified",
+      "teaser": "DECLASSIFICATION PENDING",
+      "url": null
+    }
+  ],
+
+  "footer": {
+    "line": "THANKS FOR VISITING, PLAYER 2."
+  }
+}
