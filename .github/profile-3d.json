@@ -1,0 +1,11 @@
+{
+  "type": "normal",
+  "fileName": "city-3d.svg",
+  "backgroundColor": "#0d0a18",
+  "foregroundColor": "#ece9ff",
+  "strongColor": "#19f7ff",
+  "weakColor": "#7c78a3",
+  "radarColor": "#ff2e88",
+  "growingAnimation": true,
+  "contribColors": ["#161229", "#3b1f6e", "#7a2fd0", "#19a8c4", "#19f7ff"]
+}
