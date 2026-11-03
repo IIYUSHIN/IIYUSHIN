@@ -1,6 +1,6 @@
 {
   "login": "IIYUSHIN",
-  "synced": "2026-11-01",
+  "synced": "2026-11-03",
   "since": "2026",
   "followers": 0,
   "repos": 8,
@@ -15,9 +15,9 @@
   },
   "streak": {
     "current": {
-      "len": 2,
-      "start": "2026-10-30",
-      "end": "2026-10-31"
+      "len": 0,
+      "start": null,
+      "end": null
     },
     "longest": {
       "len": 2,
@@ -27,14 +27,6 @@
     "total": 119
   },
   "last30": [
-    {
-      "date": "2026-10-03",
-      "count": 2
-    },
-    {
-      "date": "2026-10-04",
-      "count": 0
-    },
     {
       "date": "2026-10-05",
       "count": 7
@@ -145,6 +137,14 @@
     },
     {
       "date": "2026-11-01",
+      "count": 0
+    },
+    {
+      "date": "2026-11-02",
+      "count": 0
+    },
+    {
+      "date": "2026-11-03",
       "count": 0
     }
   ]
